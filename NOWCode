@@ -1,0 +1,119 @@
+!pip install -q requests
+import requests
+import json
+import random
+url = "https://type.fit/api/quotes"
+
+response = requests.get(url)
+quotes = response.json()
+quote = random.choice(quotes)
+
+
+!pip install colorama
+from colorama import Fore, Back, Style
+
+import pandas as pd
+import numpy as np
+import warnings
+warnings.filterwarnings('ignore')
+
+print(Fore.WHITE + Back.MAGENTA + "Hello! Welcome to your assignment calendar. Please respond to the following questions for each of your assignments. They will then be organized into a calendar for your convenience. When you are done, enter QUIT.")
+
+times = ['8AM', '9AM', '10AM', '11AM', '12PM', '1PM',
+                '2PM', '3PM', '4PM', '5PM', '6PM', '7PM', '8PM',
+                 '9PM', '10PM', '11PM', '12AM']
+
+sundaylist = ['-', '-', '-', '-', '-', '-',
+              '-', '-', '-', '-', '-', '-',
+              '-', '-', '-', '-', '-']
+mondaylist = ['-', '-', '-', '-', '-', '-',
+              '-', '-', '-', '-', '-', '-',
+              '-', '-', '-', '-', '-']
+tuesdaylist = ['-', '-', '-', '-', '-', '-',
+               '-', '-', '-', '-', '-', '-',
+               '-', '-', '-', '-', '-']
+wednesdaylist = ['-', '-', '-', '-', '-', 
+                 '-','-', '-', '-', '-', '-',
+                 '-', '-', '-', '-', '-', '-']
+thursdaylist = ['-', '-', '-', '-', '-', '-','-',
+                '-', '-', '-', '-', '-', '-', '-',
+                '-', '-', '-']
+fridaylist = ['-', '-', '-', '-', '-', '-',
+              '-', '-', '-', '-', '-', '-', 
+              '-', '-', '-', '-', '-']
+saturdaylist = ['-', '-', '-', '-', '-', '-',
+              '-', '-', '-', '-', '-', '-', 
+              '-', '-', '-', '-', '-']
+
+
+def TimePosition():
+    for index, value in enumerate(times): 
+        place = [index, value]
+        for item in place: 
+            if item == duetime:
+                position = place[0]
+                return position
+count = 0
+while True:
+    try:
+        name = input(Fore.MAGENTA + "Enter the name of your assignment: ")
+        if name.lower() != 'quit':
+            subject = input(Fore.MAGENTA + "Enter the subject of your assignment: ")
+            duedate = input(Fore.MAGENTA + "Enter the day of the week it is due: ")
+            duetime = input(Fore.MAGENTA + "Enter the time it is due rounded to the nearest hour (ex- 10Am or 4PM): ")
+            position = int(TimePosition())
+            if duedate.lower() == 'sunday':
+                count += 1
+                sundaylist[position] = 'Your %s for %s is due.' % (name.upper(), subject.upper())
+            elif duedate.lower() == 'monday':
+                count += 1
+                mondaylist[position] = 'Your %s for %s is due.' % (name.upper(), subject.upper())
+            elif duedate.lower() == 'tuesday':
+                count += 1
+                tuesdaylist[position] = 'Your %s for %s is due.' % (name.upper(), subject.upper())
+            elif duedate.lower() == 'wednesday':
+                count += 1
+                wednesdaylist[position] = 'Your %s for %s is due.' % (name.upper(), subject.upper())
+            elif duedate.lower() == 'thursday':
+                count += 1
+                thursdaylist[position] = 'Your %s for %s is due.' % (name.upper(), subject.upper())
+            elif duedate.lower() == 'friday':
+                count += 1
+                fridaylist[position] = 'Your %s for %s is due.' % (name.upper(), subject.upper()) 
+            elif duedate.lower() == 'saturday':
+                count += 1
+                saturdaylist[position] = 'Your %s for %s is due.' % (name.upper(), subject.upper())
+            else:
+                print(Fore.MAGENTA + Back.WHITE + "Please enter a day of the week Monday-Friday.")
+                
+        else:
+            print(Fore.WHITE + Back.MAGENTA + "\n Thank you for entering your assignments!")
+            break
+    except TypeError:
+        print(Fore.MAGENTA + Back.WHITE + "Please enter the time in this format: TTAM or TTPM")
+        
+
+feelings = input(Fore.WHITE + Back.MAGENTA + "\n Are you feeling stressed? Answer Yes or No:")
+if feelings.lower() == 'yes':
+    print(Fore.MAGENTA + Back.WHITE + "\n %s -%s" % (quote['text'], quote['author']))    
+print('\n')
+print(Fore.MAGENTA + Back.WHITE + "You have %d assignments this week. Make sure you plan accordingly!" % (count))
+print(Fore.WHITE + Back.MAGENTA + "\n Here is your calendar for the week! Make sure to get everything done for these deadlines. You got it!!")
+
+week = pd.DataFrame({'Time' : times, 'Sunday' : sundaylist, 'Monday' : mondaylist, 'Tuesday': tuesdaylist,'Wednesday' : wednesdaylist, 'Thursday' : thursdaylist, 'Friday' : fridaylist, 'Saturday' : saturdaylist})
+
+from IPython.display import HTML
+
+def hover(hover_color="#DA70D6"):
+    return dict(selector="tr:hover",
+                props=[("background-color", "%s" % hover_color)])
+
+styles = [
+    hover(),
+    dict(selector="th", props=[("font-size", "100%"),
+                               ("text-align", "center")]),
+    dict(selector="caption", props=[("caption-side", "bottom")])
+]
+html = (week.style.set_table_styles(styles))
+html
+
