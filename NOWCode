@@ -84,7 +84,7 @@ while True:
                 count += 1
                 saturdaylist[position] = 'Your %s for %s is due.' % (name.upper(), subject.upper())
             else:
-                print(Fore.MAGENTA + Back.WHITE + "Please enter a day of the week Monday-Friday.")
+                print(Fore.MAGENTA + Back.WHITE + "Please enter a day of the week Sunday-Saturday.")
                 
         else:
             print(Fore.WHITE + Back.MAGENTA + "\n Thank you for entering your assignments!")
